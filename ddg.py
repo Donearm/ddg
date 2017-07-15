@@ -4,6 +4,8 @@
 import sys
 import webbrowser
 import argparse
+import textwrap
+from shutil import get_terminal_size
 from duckduckgo import duckduckgo
 
 
@@ -118,12 +120,12 @@ def get_text_or_url(args):
 def print_result(result):
     """Print the result, ascii encode if necessary"""
     try:
-        print(result)
+        print(textwrap.fill(result, width=get_terminal_size()[0]))
     except UnicodeEncodeError:
         if sys.stdout.encoding:
-            print(result.encode(sys.stdout.encoding, 'replace'))
+            print(textwrap.fill(result.encode(sys.stdout.encoding, 'replace'), width=get_terminal_size()[0]))
         else:
-            print(result.encode('utf8'))
+            print(textwrap.fill(result.encode('utf8'), width=get_terminal_size()[0]))
     except:
         print("Unexpected error attempting to print result")
 
